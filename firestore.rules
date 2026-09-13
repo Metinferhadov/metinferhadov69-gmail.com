@@ -1,0 +1,105 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the requester is logged in
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if current user is super admin
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email.lower() == 'metinferhadov69@gmail.com' ||
+        request.auth.token.email.lower() == 'metinferhadov93@gmail.com' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin')
+      );
+    }
+    
+    // Helper function to check if user has active admin rights
+    function hasAdminRights() {
+      return isAuthenticated() && (
+        isSuperAdmin() ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin'] &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isActiveAdmin == true)
+      );
+    }
+
+    // Users collection: registered users, roles, and profiles
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Password resets OTP collection
+    match /password_resets/{resetId} {
+      allow read, write: if true;
+    }
+
+    // Products catalog: real-time synchronized across admin and customer
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // Promotional Banners
+    match /banners/{bannerId} {
+      allow read, write: if true;
+    }
+
+    // Homepage sections (Flash sale, Daily deals, etc.)
+    match /home_sections/{sectionId} {
+      allow read, write: if true;
+    }
+
+    // Categories
+    match /categories/{categoryId} {
+      allow read, write: if true;
+    }
+
+    // Coupons
+    match /coupons/{couponId} {
+      allow read, write: if true;
+    }
+
+    // Customer orders: real-time synchronized across customers and Admin Panel
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+
+    // Support administrators
+    match /support_admins/{adminId} {
+      allow read, write: if true;
+    }
+
+    // Live chat messages & users
+    match /chat_messages/{messageId} {
+      allow read, write: if true;
+    }
+    match /chat_users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Notifications
+    match /notifications/{notifId} {
+      allow read, write: if true;
+    }
+
+    // Footer links & store settings
+    match /footer_links/{linkId} {
+      allow read, write: if true;
+    }
+    match /store_settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Product videos storage for multi-domain, cross-platform streaming playback
+    match /product_videos/{videoId} {
+      allow read, write: if true;
+      match /chunks/{chunkId} {
+        allow read, write: if true;
+      }
+    }
+  }
+}
+

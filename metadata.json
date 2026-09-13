@@ -1,0 +1,6 @@
+{
+  "name": "MMZ ONLINE",
+  "description": "Premium və müasir 3D e-commerce marketplace platforması - Azərbaycan dilində zəngin alış-veriş təcrübəsi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

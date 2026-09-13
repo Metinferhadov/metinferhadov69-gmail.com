@@ -1,0 +1,125 @@
+{
+  "entities": {
+    "users": {
+      "title": "User Profiles & Roles",
+      "description": "Registered users with their roles, profile info, and admin statuses",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Auth UID of the user" },
+        "email": { "type": "string", "description": "Email address" },
+        "fullName": { "type": "string", "description": "Full name of the user" },
+        "phone": { "type": "string", "description": "Contact phone number" },
+        "role": { "type": "string", "enum": ["super_admin", "admin", "customer"], "description": "User access role" },
+        "isActiveAdmin": { "type": "boolean", "description": "Whether the admin access is active" },
+        "createdAt": { "type": "string", "description": "Account registration timestamp" },
+        "memberTier": { "type": "string", "description": "Loyalty tier" },
+        "mmzCoins": { "type": "number", "description": "Bonus coins balance" },
+        "walletBalance": { "type": "number", "description": "Store balance" }
+      },
+      "required": ["id", "email", "role", "createdAt"]
+    },
+    "products": {
+      "title": "Products Catalog",
+      "description": "Catalog of store products synchronized in real-time between admin and customers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "price": { "type": "number" },
+        "category": { "type": "string" },
+        "stock": { "type": "number" },
+        "images": { "type": "array" },
+        "tags": { "type": "array" }
+      },
+      "required": ["id", "title", "price"]
+    },
+    "banners": {
+      "title": "Promotional Banners",
+      "description": "Hero and marketing banners managed by admin and displayed to customers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "order": { "type": "number" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["id", "title"]
+    },
+    "home_sections": {
+      "title": "Home Page Sections",
+      "description": "Dynamic homepage sections like Flash Sales, Daily Deals, New Arrivals",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "title"]
+    },
+    "categories": {
+      "title": "Store Categories",
+      "description": "Product categories catalog",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "coupons": {
+      "title": "Discount Coupons",
+      "description": "Promotional coupon codes and discounts",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "discountType": { "type": "string" },
+        "discountValue": { "type": "number" }
+      },
+      "required": ["code", "discountType", "discountValue"]
+    },
+    "orders": {
+      "title": "Customer Orders",
+      "description": "Customer orders and live tracking status",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "userId": { "type": "string", "description": "ID of authenticated customer who placed the order" },
+        "status": { "type": "string" },
+        "total": { "type": "number" }
+      },
+      "required": ["id", "orderNumber", "status"]
+    },
+    "support_admins": {
+      "title": "Support Administrators",
+      "description": "Live support operators and their availability status",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "chat_messages": {
+      "title": "Chat Messages",
+      "description": "Live support chat messages between customers and admins",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" }
+      },
+      "required": ["id"]
+    },
+    "store_settings": {
+      "title": "Store Settings",
+      "description": "Global store settings, footer configuration and initialization flags",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" }
+      },
+      "required": ["id"]
+    }
+  }
+}
